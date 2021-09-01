@@ -39,7 +39,7 @@ class QuizSubmiss extends React.Component {
 
     componentDidMount() {
         // first have to get the assignment id from the quiz data
-        fetch('/api/v1/courses/368722/quizzes/718243', {
+        fetch('/api/v1/courses/368722/quizzes/' + this.props.quizNumber, {
             method: 'get',
             headers: new Headers({
                 'Authorization': 'Bearer 6936~pi2S8AWfRd0NRyB4Raj3NnYIPULzKrdrbj9VpWlm4bT6ZTTVg6D1PwkZT6ivoN3G',

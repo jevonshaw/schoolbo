@@ -56,7 +56,7 @@ class Login extends React.Component {
                                 <p style={{ color: 'black' }}>
                                     then
                                 </p>
-                                <Button variant='outlined' onClick={this.handleLogin}
+                                <Button variant='contained' onClick={this.handleLogin}
                                 style={{ background: 'white' }} >
                                     Sign in with Canvas
                                 </Button>

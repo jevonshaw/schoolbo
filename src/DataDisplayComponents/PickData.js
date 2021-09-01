@@ -1,6 +1,6 @@
 import React from "react";
 import { InputLabel, MenuItem, Select } from "@material-ui/core";
-import { FormControl, Grid } from "@material-ui/core";
+import { FormControl, Grid, Button } from "@material-ui/core";
 
 class PickData extends React.Component {
     constructor(props) {
@@ -15,31 +15,12 @@ class PickData extends React.Component {
             dataYouWant: [],
             isLoaded: false,
             assignID: 0,
-            mastered: 0,
-            unmastered: 0,
-            uncategorized: 0,
             quizzes: [],
-
-            series: [],
-            options: {
-                chart: {
-                    height: 150,
-                    type: 'pie',
-                },
-                dataLabels: {
-                    enabled: true
-                },
-                title: {
-                    text: 'A3.B/A3.C Mastery',
-                    align: 'center'
-                },
-                labels: ['Mastered', 'Unmastered']
-            }
         };
     }
 
     componentDidMount() {
-        // first have to get the assignment id from the quiz data
+        // first have to get the assignment id from the quiz data for each assignment
         fetch('/api/v1/courses/368722/quizzes/', {
             method: 'get',
             headers: new Headers({
@@ -100,6 +81,9 @@ class PickData extends React.Component {
                                 <MenuItem value="QFL">
                                   Quick Fact List  
                                 </MenuItem>
+                                <MenuItem value="QSL">
+                                  Quick Stat List  
+                                </MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>
@@ -111,7 +95,6 @@ class PickData extends React.Component {
                                 Select an assignment
                             </InputLabel>
                             <Select defaultValue="">
-
                                 {this.state.rawData.map((assignment) => {
                                     return (<MenuItem key={assignment.id} value={assignment.id}>
                                         {assignment.title}
@@ -119,6 +102,10 @@ class PickData extends React.Component {
                                 })}
                             </Select>
                         </FormControl>
+                        <Grid item>
+                            <br/>
+                            <Button variant="contained">Add</Button>
+                        </Grid>
                     </Grid>
                 </Grid>
             </div>
