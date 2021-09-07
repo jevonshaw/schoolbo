@@ -1,15 +1,23 @@
 import Chart from "react-apexcharts";
 import React from "react";
+import { Grid } from "@material-ui/core";
 
 class Charty extends React.Component {
     constructor(props) {
         super(props);
 
+        this.t = "";
+        this.studentList = [];
+        this.gradeList = [];
+
         this.state = {
-            barSeries: [{
+            rawData: [],
+            uncategorized: 0,
+
+            scatterSeries: [{
                 name: "Students",
                 type: 'scatter',
-                data: [60, 20, 30, 30, 50]
+                data: []
             }],
             options: {
                 chart: {
@@ -30,7 +38,7 @@ class Charty extends React.Component {
                     enabled: false
                 },
                 title: {
-                    text: 'Test 4 Results',
+                    text: "",
                     align: 'left'
                 },
                 grid: {
@@ -40,17 +48,105 @@ class Charty extends React.Component {
                     },
                 },
                 xaxis: {
-                    categories: ['Jill', 'Angie', 'Mark', 'Joe', 'Katherine']
+                    categories: []
                 }
             },
         };
     }
 
+    componentDidMount() {
+        // first have to get the assignment id from the quiz data
+        fetch('/api/v1/courses/368722/quizzes/' + this.props.quizNumber, {
+            method: 'get',
+            headers: new Headers({
+                'Authorization': 'Bearer 6936~pi2S8AWfRd0NRyB4Raj3NnYIPULzKrdrbj9VpWlm4bT6ZTTVg6D1PwkZT6ivoN3G',
+                'Content-Type': 'application/json'
+            })
+        })
+            .then((res) => res.json())
+            .then((result) => {
+                this.setState({
+                    isLoaded: true,
+                });
+                return result;
+            },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
+            .then((result) => {
+                this.setState({
+                    rawData: result,
+                    assignID: result.assignment_id
+                });
+            })
+            // below we use the assignment id to get the metadata about the assignment
+            .then(() => {
+                fetch('/api/v1/courses/368722/assignments/'
+                    + this.state.assignID + '/submissions?include[]=submission_history', {
+                    method: 'get',
+                    headers: new Headers({
+                        'Authorization': 'Bearer 6936~pi2S8AWfRd0NRyB4Raj3NnYIPULzKrdrbj9VpWlm4bT6ZTTVg6D1PwkZT6ivoN3G',
+                        'Content-Type': 'application/json'
+                    })
+                })
+                    .then((res) => res.json())
+                    .then((res) => {
+                        this.setState({
+                            dataYouWant: Object.values(res)
+                        });
+                        // below we will get the identifiers of the students for 
+                        // each score
+                        this.state.dataYouWant.forEach((student) => {
+                            if (student.submission_history[0].attempt !== null) {
+                                this.studentList.push(student.user_id);
+                                this.gradeList.push(student.score);
+                            } else {
+                                this.setState({
+                                    uncategorized: this.state.uncategorized + 1
+                                });
+                            }
+                        });
+                        this.setState({
+                            scatterSeries: [{
+                                name: "Students",
+                                type: 'scatter',
+                                data: this.gradeList
+                            }],
+                            options: {
+                                xaxis: {
+                                    categories: this.studentList
+                                },
+                                title: {
+                                    text: this.state.rawData.title,
+                                    align: 'center'
+                                },
+                            }
+                        });
+                    });
+            });
+    }
+
+
     render() {
         return (
-            <div id="chart">
+            <div>
                 <Chart options={this.state.options}
-                    series={this.state.barSeries} type='scatter' height='350' width='100%' />
+                    series={this.state.scatterSeries} type='scatter' height='350' width='100%' />
+                <Grid
+                    container
+                    spacing={2}
+                    direction="column"
+                    align="center"
+                    justifyContent="center"
+                >
+                    <Grid item >
+                        <p>{this.state.uncategorized} student(s) were indeterminable</p>
+                    </Grid>
+                </Grid>
             </div>
         );
     }

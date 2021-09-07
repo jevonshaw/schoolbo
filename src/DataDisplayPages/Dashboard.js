@@ -11,8 +11,8 @@ import APIChart from '../DataDisplayComponents/ProgressionChartAPIData';
 import CourseList from '../DataDisplayComponents/CourseList';
 import Navbar from '../Navbar/Navbar';
 import QuizQuestions from '../DataDisplayComponents/QuizQuestions';
-import QuizSubmiss from '../DataDisplayComponents/QuizSubmissions';
-import PickData from '../DataDisplayComponents/PickData';
+import TEKSPie from '../DataDisplayComponents/TEKSPie';
+import IncidenceChart from '../DataDisplayComponents/TeksOccuranceChart';
 
 class DashboardPage extends React.Component {
     constructor(props) {
@@ -44,6 +44,7 @@ class DashboardPage extends React.Component {
 
     handleBreakdownChange(event) {
         this.breakdown = event.target.value;
+        console.log(this.breakdown);
     }
 
     addBreakdown() {
@@ -51,11 +52,19 @@ class DashboardPage extends React.Component {
             console.log("please select a breakdown or assignment");
             return;
         }
-        this.t.push(<QuizSubmiss quizNumber={this.assignment} />);
+        switch (this.breakdown) {
+            case "TMC":
+                this.t.push(<TEKSPie quizNumber={this.assignment} />);
+                break;
+            case "ARS":
+                this.t.push(<Charty quizNumber={this.assignment} />);
+                break;
+            default:
+                console.log("something is wrong");
+        }
         this.setState({
             breakdownPapers: this.t
         });
-
         console.log(this.breakdown, this.assignment);
     }
 
@@ -153,7 +162,7 @@ class DashboardPage extends React.Component {
                     direction="row"
                     justifyContent="center"
                     alignItems="center">
-                    <Grid item md={6} lg={6}>
+                    {/* <Grid item md={6} lg={6}>
                         <Paper>
                             <Charty />
                             <Button
@@ -162,17 +171,29 @@ class DashboardPage extends React.Component {
                                 Remove
                             </Button>
                         </Paper>
-                    </Grid>
+                    </Grid> */}
                     <Grid item md={6} lg={6}>
                         <Paper>
-                            <Charty2 />
+                            <IncidenceChart />
                             <Button
                                 variant="outlined"
                                 style={{ color: 'red' }}>
                                 Remove
                             </Button>
                         </Paper>
-                     </Grid>
+                    </Grid>
+                    <Grid item md={6} lg={6}>
+                        <Paper>
+                            <p>
+                                {"You're a great teacher, and the work you do matters"}
+                            </p>
+                            <Button
+                                variant="outlined"
+                                style={{ color: 'red' }}>
+                                Remove
+                            </Button>
+                        </Paper>
+                    </Grid>
                     {/*<Grid item md={6} lg={6}>
                         <Paper>
                             <QuizSubmiss />
@@ -184,17 +205,17 @@ class DashboardPage extends React.Component {
                         </Paper>
                     </Grid> */}
                     {this.state.breakdownPapers.map((bd) => {
-                        return(
-                        <Grid item md={6} lg={6}>
-                            <Paper>
-                                {bd}
-                                <Button
-                                    variant="outlined"
-                                    style={{ color: "red" }}>
-                                    Remove
-                                </Button>
-                            </Paper>
-                        </Grid>)
+                        return (
+                            <Grid item md={6} lg={6}>
+                                <Paper>
+                                    {bd}
+                                    <Button
+                                        variant="outlined"
+                                        style={{ color: "red" }}>
+                                        Remove
+                                    </Button>
+                                </Paper>
+                            </Grid>)
                     })}
                 </Grid>
             </div>

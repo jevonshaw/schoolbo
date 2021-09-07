@@ -2,7 +2,7 @@ import Chart from "react-apexcharts";
 import React from "react";
 import { Button, Grid } from "@material-ui/core";
 
-class QuizSubmiss extends React.Component {
+class TEKSPie extends React.Component {
     constructor(props) {
         super(props);
 
@@ -29,7 +29,7 @@ class QuizSubmiss extends React.Component {
                     enabled: true
                 },
                 title: {
-                    text: 'A3.B/A3.C Mastery',
+                    text: "TEKS Breakdown",
                     align: 'center'
                 },
                 labels: ['Mastered', 'Unmastered']
@@ -115,6 +115,7 @@ class QuizSubmiss extends React.Component {
     }
 
     render() {
+        console.log(this.state.dataYouWant);
         if (this.state.mastered !== 0) {
             return (
                 <div>
@@ -139,4 +140,4 @@ class QuizSubmiss extends React.Component {
     }
 }
 
-export default QuizSubmiss;
+export default TEKSPie;
