@@ -16,12 +16,12 @@ class IncidenceChart extends React.Component {
 
             historicSeries: [{
                 name: "Historic",
-                type: 'bar',
+                type: "bar",
                 data: [70, 80, 35, 40, 92, 83]
             }, {
                 name: "Current Pacing",
                 type: "bar",
-                data: [75, 79, 40, 40, 80, 80]
+                data: [75, 50, 40, 40, 80, 80]
             }],
             options: {
                 chart: {

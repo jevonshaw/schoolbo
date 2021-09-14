@@ -1,6 +1,6 @@
 import Chart from "react-apexcharts";
 import React from "react";
-import { Button, Grid } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 
 class TEKSPie extends React.Component {
     constructor(props) {
@@ -115,7 +115,6 @@ class TEKSPie extends React.Component {
     }
 
     render() {
-        console.log(this.state.dataYouWant);
         if (this.state.mastered !== 0) {
             return (
                 <div>

@@ -5,7 +5,7 @@ import { URLSearchParams } from 'url';
 import Charty2 from '../DataDisplayComponents/ProgressionChart';
 import {
     Grid, Paper, Button, FormControl,
-    InputLabel, AppBar, Select, MenuItem
+    InputLabel, AppBar, Select, MenuItem, Input, TextField
 } from '@material-ui/core';
 import APIChart from '../DataDisplayComponents/ProgressionChartAPIData';
 import CourseList from '../DataDisplayComponents/CourseList';
@@ -13,6 +13,7 @@ import Navbar from '../Navbar/Navbar';
 import QuizQuestions from '../DataDisplayComponents/QuizQuestions';
 import TEKSPie from '../DataDisplayComponents/TEKSPie';
 import IncidenceChart from '../DataDisplayComponents/TeksOccuranceChart';
+import TEKSPieStud from '../DataDisplayComponents/TEKSPieStudent';
 
 class DashboardPage extends React.Component {
     constructor(props) {
@@ -172,7 +173,7 @@ class DashboardPage extends React.Component {
                             </Button>
                         </Paper>
                     </Grid> */}
-                    <Grid item md={6} lg={6}>
+                    {/* <Grid item md={6} lg={6}>
                         <Paper>
                             <IncidenceChart />
                             <Button
@@ -181,12 +182,48 @@ class DashboardPage extends React.Component {
                                 Remove
                             </Button>
                         </Paper>
+                    </Grid> */}
+                    <Grid item md={6} lg={12}>
+                        <Paper>
+                            <TEKSPieStud quizNumber={718243} />
+                            <Button
+                                variant="outlined"
+                                style={{ color: 'red' }}>
+                                Remove
+                            </Button>
+                        </Paper>
                     </Grid>
-                    <Grid item md={6} lg={6}>
+                    {/* <Grid item md={6} lg={6}>
                         <Paper>
                             <p>
                                 {"You're a great teacher, and the work you do matters"}
                             </p>
+                            <Button
+                                variant="outlined"
+                                style={{ color: 'red' }}>
+                                Remove
+                            </Button>
+                        </Paper>
+                    </Grid> */}
+                    <Grid item md={6} lg={6}>
+                        <Paper>
+                            <p>
+                                {"SWBAT determine what caused the cold war"}
+                            </p>
+                            <br/>
+                            <p>
+                                {"The cold war was caused by..."}
+                            </p>
+                            <TextField />
+                            <p>
+                                {"I think I can improve in..."}
+                            </p>
+                            <TextField />
+                            <p>
+                                {"I can confidently..."}
+                            </p>
+                            <TextField />
+                            <br /> <br />
                             <Button
                                 variant="outlined"
                                 style={{ color: 'red' }}>
